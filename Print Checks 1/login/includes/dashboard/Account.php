@@ -189,7 +189,7 @@
 							<table class="table table-striped">
 								<thead>
 								  <tr>
-									<th>#</th>
+									<th>N.</th>
 									<th>Type</th>
 									<th>Number</th>
 									<th>View</th>

@@ -46,7 +46,7 @@
 									$amount = $_POST['amount']; // get amount
 									include_once $_inc_db.'connect_db.php';
 									//get check number first, then add checking info.
-									$getIdInfo = mysql_query("select * from `your_account` where id = '$accountNumberId' limit 1");
+									$getIdInfo = mysql_query("select * from `your_account` where id = $accountNumberId limit 1");
 
 									$rowCheck = mysql_fetch_assoc($getIdInfo);
 										$Fetch_check_number = $rowCheck['check_number']; //get the check number
@@ -62,7 +62,7 @@
 										};
 									$rand_check_id = getRandIdNow(7);
 									$addNewAccoutNow = mysql_query("insert into `create_check` 
-																			values( '','$rand_check_id','$payee','$memo','$amount', '$Fetch_check_number',1,$accountNumberId) "); //1 means check is active, 0 is voided check
+																			values( '','$rand_check_id','$payee','$memo','$amount', '$Fetch_check_number',1,$accountNumberId, NOW()) "); //1 means check is active, 0 is voided check
 									if($addNewAccoutNow){ 
 										//if done, show success message
 										echo "<p class='text-center' style='color: green;border: 2px solid green;'>you have created new check successfully!<br>";

@@ -17,7 +17,10 @@
 				<a href="index.php?Account"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Account</a>
 			</li> 
             <li class="<?php if(isset($_GET['PrintChecks'])){echo $active;}else{echo $deactive;}?>">
-				<a href="index.php?PrintChecks"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Print Checks</a>
+				<a href="index.php?PrintChecks"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Create Checks</a>
+			</li>
+			<li class="<?php if(isset($_GET['viewAllChecks'])){echo $active;}else{echo $deactive;}?>">
+				<a href="index.php?viewAllChecks"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> View Checks</a>
 			</li>
             <li class="<?php if(isset($_GET['setting'])){echo $active;}else{echo $deactive;}?>">
 				<a href="index.php?setting"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Setting</a>

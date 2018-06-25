@@ -32,8 +32,9 @@
 							<table class="table table-striped">
 								<thead>
 								  <tr>
-									<th>#</th>
-									<th>Check #</th>
+									<th>N.</th>
+									<th>Check N.</th>
+									<th>On</th>
 									<th>Payee</th>
 									<th>Amount</th>
 									<th>Status</th>
@@ -50,15 +51,20 @@
 									$Fetch_payee = $row['payee'];
 									$Fetch_memo = $row['memo'];
 									$Fetch_amount = $row['amount'];
+									$actaualAmt = number_format($Fetch_amount,2,".",",");
 									$Fetch_check_number = $row['check_number'];
 									$Fetch_check_status = $row['check_status'];
 									$Fetch_bank_id = $row['bank_id'];
+									$Fetch_created_on= $row['created_on'];
+									$phpdate = strtotime( $Fetch_created_on );
+									$CreatedDate = date( 'F jS, Y', $phpdate );
 								?>
 									  <tr>
 										<td><?php echo $Fetch_get_check_id;?></td>
 										<td><?php echo $Fetch_check_number;?></td>
+										<td><?php echo $CreatedDate;?></td>
 										<td><?php echo $Fetch_payee;?></td>
-										<td>$<?php echo $Fetch_amount;?></td>
+										<td>$<?php echo $actaualAmt;?></td>
 										<td><?php if($Fetch_check_status == 1) echo "<span style='color: green;'>Valid</span>"; else  echo "<span style='color: red;'>Voided</span>"?></td>
 										<td> <a href="index.php?chekNum=<?php echo $Fetch_rand_id;?>"><button type="button" name="deactiveBank" class="btn btn-success btn-sm">View</button></a></td>
 									  </tr>

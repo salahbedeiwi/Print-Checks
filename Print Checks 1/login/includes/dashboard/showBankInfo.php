@@ -278,7 +278,7 @@
 							<table class="table table-striped">
 								<thead>
 								  <tr>
-									<th>#</th>
+									<th>N.</th>
 									<th>Status</th>
 									<th>Action</th>
 									<th>Last Check</th>
