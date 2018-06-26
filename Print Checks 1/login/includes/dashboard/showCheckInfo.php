@@ -82,6 +82,7 @@
 											$Fetch_check_number = $row['check_number'];
 											$Fetch_check_status = $row['check_status'];
 											$Fetch_bank_id = $row['bank_id'];
+											$check_issued_on = $row['created_on'];
 
 								?>
 							  <!-- End Comments here -->
@@ -101,9 +102,19 @@
 										// if clients are registered, show table 
 									$row = mysql_fetch_assoc($getBankAccountInfoId);
 										$AccountId = $row['id'];
+										$your_name = $row['your_name'];
+										$your_main_address = $row['your_main_address'];
+										$cityStateZip = $row['cityStateZip'];
+										$your_phone_number = $row['your_phone_number'];
+										$bank_phone = $row['bank_phone'];
 										$acct_type= $row['acct_type'];
 										$_bank_name = $row['bank_name'];
+										$Fetch_BankMainAddress = $row['bank_main_strreet_address'];
+										$Fetch_BankCityStateZip = $row['bank_cityZipCode'];
+										$Fetch_bank_phone = $row['bank_phone'];
+															
 										$_acct_number = $row['acct_number'];
+										$routing_number = $row['routing_number'];
 										$viewacct_type =  substr ( $acct_type , 0 , 3 ); //first 3 letters/digits
 										$BankNameShortCut =  substr ( $_bank_name , 0 , 3 );//first 3 letters/digits
 										$BankAcctShortCut =  substr ( $_acct_number , -5 ); //get last 5 digits
@@ -244,6 +255,7 @@
 										$Fetch_payee = $row['payee'];
 										$Fetch_memo = $row['memo'];
 										$Fetch_amount = $row['amount'];
+										$actaualAmt = number_format($Fetch_amount,2,".",",");
 										$Fetch_check_number = $row['check_number'];
 										$Fetch_check_status = $row['check_status'];
 										$Fetch_bank_id = $row['bank_id'];
@@ -280,34 +292,63 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					  <div class="modal-header modelHeader">
-						<h3 class="modal-title" id="myModalLabel">Print Current Check</h3>
+						<h3 class="modal-title" id="myModalLabel">Print Current Check <button class="pull-right btn btn-primary btn-sm" onclick="printContent('printCheck')">Print</button></h3>
 					  </div>
-					  <div class="modal-body aliceblue">
+					  <div class="modal-body aliceblue checkSection1" id="printCheck1">
 							<!-- First Top: Check Details -->
+							<div>
+								<?php 
+									//if check is voided: $Fetch_check_status
+									if($Fetch_check_status == 0){
+										echo "<h1 class='text-center voidCheck'>Voided Check!</h1>";
+									}
+								?>
+							</div>
 							<div class="col-sm-12">
 								<div class="col-sm-10"></div>
-								<div class="col-sm-2">5005</div>
+								<div class="col-sm-2">Check#: <?php echo $Fetch_check_number;?></div>
 							</div>
 							<div class="clearfix"></div>
 							<div class="col-sm-12">
-								<div class="col-sm-8">
+								<div class="col-sm-5">
 									<address>
-										123 Sample St<br>
-										Spring Lake Park, MN, 55432
+										<?php echo $your_name;?><br>
+										<?php echo $your_main_address;?><br>
+										<?php echo $cityStateZip;?><br>
+										<?php echo $your_phone_number;?>
 									</address>
 								</div>
-								<div class="col-sm-4">Date: __10/12/2018__</div>
+								<div class="col-sm-5">
+									<address>
+										<?php echo $_bank_name;?><br>
+										<?php echo $Fetch_BankMainAddress;?><br>
+										<?php echo $Fetch_BankCityStateZip;?><br>
+										<?php echo $Fetch_bank_phone;?>
+									</address>
+								</div>
+								<div class="col-sm-2"><b>Date:
+								<?php 
+								$timestamp = strtotime($check_issued_on);
+								$IssuedOn = date('m/d/Y', $timestamp);
+								echo $IssuedOn;
+								?>
+								</b></div>
 							</div>
 							<div class="clearfix"></div>
 							<div class="col-sm-12">
 								<div class="col-sm-9">
-									Pay to the order of: __________________________
+									<div class="col-sm-2 payTo b">
+										Pay to the order of :
+									</div>
+									<div class="col-sm-8 b1">
+										<?php echo $Fetch_payee; ?>
+									</div>
 								</div>
-								<div class="col-sm-3">Amount: $9924.32</div>
+								<div class="col-sm-3">Amount: <span class="b bAround">$<?php echo $actaualAmt;?></span></div>
 							</div>
-							<div class="clearfix"></div>
+							<div class="clearfix"></div><br>
 							<div class="col-sm-12">
-								<div class="col-sm-12">
+								<div class="col-sm-10">
 									<?php 
 										//$n = number_format($Fetch_amount,2); //make sure it is in a double format
 										$n =  sprintf("%.2f", $Fetch_amount); //make sure it is in a double format, say 1.25
@@ -315,30 +356,262 @@
 										$fraction = $n - $whole; // .25
 										$getCents = substr($fraction, 2);  // remove the decimal point
 									?>
-									Total:  <span id="AddConvertedNumber"></span>
+									<span id="AddConvertedNumber" class="b1 b"></span>
 								</div>
 							</div>
-							<div class="clearfix"></div>
+							<div class="clearfix"></div><br>
 							<div class="col-sm-12">
 								<div class="col-sm-8">
-									Note: ______________________
+									Memo: <?php  echo $Fetch_memo; ?>
 								</div>
-								<div class="col-sm-4">Signature: __________</div>
+								<div class="col-sm-4 h100Percent">Signature: <span class="b1 belowBottomRight"></span></div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12 text-center">
+								<div class="col-sm-8">
+									<?php echo $routing_number;?>  &nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $_acct_number;?>&nbsp;&nbsp;&nbsp;&nbsp;
+									<?php echo $Fetch_check_number;?>
+								</div>
 							</div>
 							<div class="clearfix"></div>
+					</div>
+					<div class="modal-body aliceblue checkSection1 hidden-xs hidden-sm hidden-md hidden-lg" id="printCheck">
+							<div>
+								<?php 
+									//if check is voided: $Fetch_check_status
+									if($Fetch_check_status == 0){
+										echo "<h1 class='text-center voidCheck'>Voided Check!</h1>";
+									}
+								?>
+							</div>
 							<div class="col-sm-12">
-								<div class="col-sm-3">
-									123546985
-								</div>
-								<div class="col-sm-3">
-									123546985
-								</div>
-								<div class="col-sm-3">
-									5004
-								</div>
+								<div class="col-sm-12 pull-right pr-35px"><span class="fw-bigger">check#:</span> <?php echo $Fetch_check_number;?></div>
 							</div>
 							<div class="clearfix"></div>
-				  </div>
+							<div class="w-100-percent">
+								<div class="w-33-33-percent">
+									<address>
+										<span class="fw-bigger"><?php echo $your_name;?></span><br>
+										<?php echo $your_main_address;?><br>
+										<?php echo $cityStateZip;?><br>
+										<?php echo $your_phone_number;?>
+									</address>
+								</div>
+								<div class="w-33-33-percent">
+									<address>
+										<span class="fw-bigger"><?php echo $_bank_name;?></span><br>
+										<?php echo $Fetch_BankMainAddress;?><br>
+										<?php echo $Fetch_BankCityStateZip;?><br>
+										<?php echo $Fetch_bank_phone;?>
+									</address>
+								</div>
+								<div class="w-25-percent customDate"><b class="fw-bigger">Date:
+								<?php 
+								$timestamp = strtotime($check_issued_on);
+								$IssuedOn = date('m/d/Y', $timestamp);
+								echo $IssuedOn;
+								?>
+								</b></div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12">
+								<div class="w-70">
+									<div class="w-20  payTo b fw-bigger">
+										Pay to the<br>  order of :
+									</div>
+									<div class="w-60 b1">
+										<?php echo $Fetch_payee; ?>
+									</div>
+								</div>
+								<div class="w-25-percent pull-right" style="vertical-align: bottom;">Amount: <span class="b bAround" style="vertical-align: super;">$<?php echo $actaualAmt;?></span></div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12">
+								<div class="col-sm-10">
+									<?php 
+										//$n = number_format($Fetch_amount,2); //make sure it is in a double format
+										$n =  sprintf("%.2f", $Fetch_amount); //make sure it is in a double format, say 1.25
+										$whole = floor($Fetch_amount);      // 1
+										$fraction = $n - $whole; // .25
+										$getCents = substr($fraction, 2);  // remove the decimal point
+									?>
+									<span id="AddConvertedNumber1" class="b1 b"></span>
+								</div>
+							</div>
+							<div class="clearfix"></div><br><br><br><br>
+							<div class="col-sm-12">
+								<div class="w-60">
+									<span class="fw-bigger">Memo: </span><?php  echo $Fetch_memo; ?>
+								</div>
+								<div class="w-30 h100Percent  b1"><span class="b1 belowBottomRight"></span></div>
+							</div>
+							<div class="clearfix"></div><br><br>
+							<div class="col-sm-12 text-center">
+								<div class="col-sm-8 numStyle fw-bigger">
+									<?php echo $routing_number;?>  &nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $_acct_number;?>&nbsp;&nbsp;&nbsp;&nbsp;
+									<?php echo $Fetch_check_number;?>
+								</div>
+							</div>
+							<div class="clearfix"></div><br><br><br><br><br><br>
+							<!-- First Top: Check Details : Print-->
+							<p class="text-center">Keep for your payee record</p>
+							<div>
+								<?php 
+									//if check is voided: $Fetch_check_status
+									if($Fetch_check_status == 0){
+										echo "<h1 class='text-center voidCheck'>Voided Check!</h1>";
+									}
+								?>
+							</div>
+							<div class="col-sm-12">
+								<div class="col-sm-12 pull-right pr-35px"><span class="fw-bigger">check#:</span> <?php echo $Fetch_check_number;?></div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="w-100-percent">
+								<div class="w-33-33-percent">
+									<address>From:
+										<span class="fw-bigger"><?php echo $your_name;?></span><br>
+										<?php echo $your_main_address;?><br>
+										<?php echo $cityStateZip;?><br>
+										<?php echo $your_phone_number;?>
+									</address>
+								</div>
+								<div class="w-33-33-percent">
+								</div>
+								<div class="w-25-percent customDate"><b class="fw-bigger">Issued on:
+								<?php 
+								$timestamp = strtotime($check_issued_on);
+								$IssuedOn = date('m/d/Y', $timestamp);
+								echo $IssuedOn;
+								?>
+								</b></div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12">
+								<div class="w-70">
+									<div class="w-20  payTo b fw-bigger">
+										Pay to the<br>  order of :
+									</div>
+									<div class="w-60 b1">
+										<?php echo $Fetch_payee; ?>
+									</div>
+								</div>
+								<div class="w-25-percent pull-right" style="vertical-align: bottom;">Amount: <span class="b bAround" style="vertical-align: super;">$<?php echo $actaualAmt;?></span></div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12">
+								<div class="col-sm-10">
+									<?php 
+										//$n = number_format($Fetch_amount,2); //make sure it is in a double format
+										$n =  sprintf("%.2f", $Fetch_amount); //make sure it is in a double format, say 1.25
+										$whole = floor($Fetch_amount);      // 1
+										$fraction = $n - $whole; // .25
+										$getCents = substr($fraction, 2);  // remove the decimal point
+									?>
+									<span id="AddConvertedNumber2" class="b1 b"></span>
+								</div>
+							</div>
+							<div class="clearfix"></div><br><br>
+							<div class="col-sm-12">
+								<div class="w-60">
+									<span class="fw-bigger">Memo: </span><?php  echo $Fetch_memo; ?>
+								</div>
+								<div class="w-30 h100Percent  b1">Printed On: <?php 
+									$printedOn =  date("m/d/Y");
+									echo $printedOn;
+								?></div>
+							</div>
+							<div class="clearfix"></div><br><br><br>
+							<div class="clearfix"></div><br><br><br><br>
+							<!-- First Top: Check Details : Print-->
+							
+							<p class="text-center">Keep for your business record</p>
+							<div>
+								<?php 
+									//if check is voided: $Fetch_check_status
+									if($Fetch_check_status == 0){
+										echo "<h1 class='text-center voidCheck'>Voided Check!</h1>";
+									}
+								?>
+							</div>
+							<div class="col-sm-12">
+								<div class="col-sm-12 pull-right pr-35px"><span class="fw-bigger">check#:</span> <?php echo $Fetch_check_number;?></div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="w-100-percent">
+								<div class="w-33-33-percent">
+									<address>
+										<span class="fw-bigger"><?php echo $your_name;?></span><br>
+										<?php echo $your_main_address;?><br>
+										<?php echo $cityStateZip;?><br>
+										<?php echo $your_phone_number;?>
+									</address>
+								</div>
+								<div class="w-33-33-percent">
+									<address>
+										<span class="fw-bigger"><?php echo $_bank_name;?></span><br>
+										<?php echo $Fetch_BankMainAddress;?><br>
+										<?php echo $Fetch_BankCityStateZip;?><br>
+										<?php echo $Fetch_bank_phone;?>
+									</address>
+								</div>
+								<div class="w-25-percent customDate"><b class="fw-bigger">Issued on:
+								<?php 
+								$timestamp = strtotime($check_issued_on);
+								$IssuedOn = date('m/d/Y', $timestamp);
+								echo $IssuedOn;
+								?>
+								</b></div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12">
+								<div class="w-70">
+									<div class="w-20  payTo b fw-bigger">
+										Pay to the<br>  order of :
+									</div>
+									<div class="w-60 b1">
+										<?php echo $Fetch_payee; ?>
+									</div>
+								</div>
+								<div class="w-25-percent pull-right" style="vertical-align: bottom;">Amount: <span class="b bAround" style="vertical-align: super;">$<?php echo $actaualAmt;?></span></div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12">
+								<div class="col-sm-10">
+									<?php 
+										//$n = number_format($Fetch_amount,2); //make sure it is in a double format
+										$n =  sprintf("%.2f", $Fetch_amount); //make sure it is in a double format, say 1.25
+										$whole = floor($Fetch_amount);      // 1
+										$fraction = $n - $whole; // .25
+										$getCents = substr($fraction, 2);  // remove the decimal point
+									?>
+									<span id="AddConvertedNumber3" class="b1 b"></span>
+								</div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12">
+								<div class="w-60">
+									<span class="fw-bigger">Memo: </span><?php  echo $Fetch_memo; ?>
+								</div>
+								<div class="w-30 h100Percent  b1">Printed On: <?php 
+									$printedOn =  date("m/d/Y");
+									echo $printedOn;
+								?>
+								
+								</div>
+							</div>
+							<div class="clearfix"></div><br>
+							<div class="col-sm-12 text-center">
+								<div class="col-sm-8 numStyle fw-bigger">
+									<?php echo $routing_number;?>  &nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $_acct_number;?>&nbsp;&nbsp;&nbsp;&nbsp;
+									<?php echo $Fetch_check_number;?>
+								</div>
+							</div>
+							<div class="clearfix"></div><br>
+					</div>
 				  </div>
 			</div>
 		</form>
@@ -558,7 +831,10 @@
 	}else{
 		cents = (<?php echo $n;?> + "").split(".")[1];
 	}
-	document.getElementById("AddConvertedNumber").innerHTML = toWords(<?php echo $whole; ?>) + " Dollars and ***" + cents + "/100*** Cents Only.";
+	document.getElementById("AddConvertedNumber").innerHTML = toWords(<?php echo $whole; ?>) + " & " + cents + "/100 US. Dollars Only.";
+	document.getElementById("AddConvertedNumber1").innerHTML = toWords(<?php echo $whole; ?>) + " & " + cents + "/100 US. Dollars Only.";
+	document.getElementById("AddConvertedNumber2").innerHTML = toWords(<?php echo $whole; ?>) + " & " + cents + "/100 US. Dollars Only.";
+	document.getElementById("AddConvertedNumber3").innerHTML = toWords(<?php echo $whole; ?>) + " & " + cents + "/100 US. Dollars Only.";
 </script>
 
 

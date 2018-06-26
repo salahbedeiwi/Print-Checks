@@ -38,6 +38,8 @@
 									$YourMainAddress = $_POST['YourMainAddress']; // get Your Main Address
 									$CityStateZip = $_POST['CityStateZip']; // get City State Zip
 									$BankName = $_POST['BankName']; // get Bank Name
+									$BankMainAddress = $_POST['BankMainAddress']; // get Your Bank Main Address
+									$BankCityStateZip = $_POST['BankCityStateZip']; // get Bank City State Zip
 									$BankType = $_POST['BankType']; // get Bank Type
 									$BankAccountNumber = $_POST['BankAccountNumber']; // get Bank Account Number
 									$RoutingNumber = $_POST['RoutingNumber']; // get Routing Number
@@ -47,7 +49,7 @@
 									//now insert the info on the table - clients
 									$addNewAccoutNow = mysql_query("insert into `your_account` 
 																			values( '','$FullName','$YourMainAddress','$CityStateZip', '$YourCellPhone',
-																				'$BankType', '$BankName','$BankAccountNumber',  '$RoutingNumber','$BankPhoneNumber', 1, 5000) "); //1 means is active, default check starts at 5000
+																				'$BankType', '$BankName','$BankMainAddress','$BankCityStateZip','$BankAccountNumber',  '$RoutingNumber','$BankPhoneNumber', 1, 5000) "); //1 means is active, default check starts at 5000
 									if($addNewAccoutNow){ 
 										//if done, show success message
 										echo "<p class='text-center' style='color: green;border: 2px solid green;'>you have added new bank account successfully!<br>";
@@ -58,7 +60,7 @@
 								?>
 							  <!-- End Comments here -->
 						  <div class="form-group">
-							<label for="FullName" class="col-sm-4 control-label">Your Name
+							<label for="FullName" class="col-sm-4 control-label">Business Name
 								<span class="glyphicon glyphicon-info-sign red-tooltip" aria-hidden="true"   data-toggle="tooltip"
 										data-placement="right" 
 											title="Enter Employee full name">
@@ -69,7 +71,7 @@
 							</div>
 						  </div>
 						  <div class="form-group">
-							<label for="YourCellPhone" class="col-sm-4 control-label">Your Phone
+							<label for="YourCellPhone" class="col-sm-4 control-label">Business Phone
 								<span class="glyphicon glyphicon-info-sign red-tooltip" aria-hidden="true"   data-toggle="tooltip"
 										data-placement="right" 
 											title="Enter Cell Phone to add employee - Only Numbers & No Spaces">
@@ -80,7 +82,7 @@
 							</div>
 						  </div>
 						  <div class="form-group">
-							<label for="YourMainAddress" class="col-sm-4 control-label">Your Address
+							<label for="YourMainAddress" class="col-sm-4 control-label">Business Address
 								<span class="glyphicon glyphicon-info-sign red-tooltip" aria-hidden="true"   data-toggle="tooltip"
 										data-placement="right" 
 											title="Enter Your Address: 123 Sample St N">
@@ -92,7 +94,7 @@
 						  </div>
 						  
 						  <div class="form-group">
-							<label for="CityStateZip" class="col-sm-4 control-label">City, State Zip
+							<label for="CityStateZip" class="col-sm-4 control-label">Business City, State Zip
 								<span class="glyphicon glyphicon-info-sign red-tooltip" aria-hidden="true"   data-toggle="tooltip"
 										data-placement="right" 
 											title="Minneapolis, MN 55555">
@@ -111,6 +113,29 @@
 							</label>
 							<div class="col-sm-8">
 							  <input type="text"  name="BankName" placeholder="Ex: Wells Fargo" class="form-control" id="BankName" />
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label for="BankMainAddress" class="col-sm-4 control-label">Bank Main Address
+								<span class="glyphicon glyphicon-info-sign red-tooltip" aria-hidden="true"   data-toggle="tooltip"
+										data-placement="right" 
+											title="Enter Bank Address: 123 Sample St N">
+								</span>
+							</label>
+							<div class="col-sm-8">
+								<input type="text"  name="BankMainAddress" placeholder="Bank Street Address" class="form-control" id="BankMainAddress" required = "required" />
+							</div>
+						  </div>
+						  
+						  <div class="form-group">
+							<label for="BankCityStateZip" class="col-sm-4 control-label">Bank City, State Zip
+								<span class="glyphicon glyphicon-info-sign red-tooltip" aria-hidden="true"   data-toggle="tooltip"
+										data-placement="right" 
+											title="Minneapolis, MN 55555">
+								</span>
+							</label>
+							<div class="col-sm-8">
+								<input type="text" name="BankCityStateZip" placeholder="Minneapolis, MN 55555" class="form-control" id="BankCityStateZip" required = "required" />
 							</div>
 						  </div>
 						  <div class="form-group">

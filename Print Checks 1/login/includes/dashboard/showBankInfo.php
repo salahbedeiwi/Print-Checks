@@ -30,6 +30,8 @@
 			$Fetch_your_phone_number = "";
 			$Fetch_acct_type= "";
 			$Fetch_bank_name = "";
+			$Fetch_BankMainAddress = "";
+			$Fetch_BankCityStateZip = "";
 			$Fetch_acct_number = "";
 			$Fetch_routing_number = "";
 			$Fetch_bank_phone = "";
@@ -50,6 +52,8 @@
 					$Fetch_your_phone_number = $row['your_phone_number'];
 					$Fetch_acct_type= $row['acct_type'];
 					$Fetch_bank_name = $row['bank_name'];
+					$Fetch_BankMainAddress = $row['bank_main_strreet_address'];
+					$Fetch_BankCityStateZip = $row['bank_cityZipCode'];
 					$Fetch_acct_number = $row['acct_number'];
 					$Fetch_routing_number = $row['routing_number'];
 					$Fetch_bank_phone = $row['bank_phone'];
@@ -74,6 +78,8 @@
 									$YourMainAddress = $_POST['YourMainAddress']; // get Your Main Address
 									$CityStateZip = $_POST['CityStateZip']; // get City State Zip
 									$BankName = $_POST['BankName']; // get Bank Name
+									$BankMainAddress = $_POST['BankMainAddress']; // get Your Bank Main Address
+									$BankCityStateZip = $_POST['BankCityStateZip']; // get Bank City State Zip
 									$BankType = $_POST['BankType']; // get Bank Type
 									$BankAccountNumber = $_POST['BankAccountNumber']; // get Bank Account Number
 									$RoutingNumber = $_POST['RoutingNumber']; // get Routing Number
@@ -88,6 +94,8 @@
 																				your_main_address = '$YourMainAddress',
 																				cityStateZip = '$CityStateZip',
 																				bank_name = '$BankName',
+																				bank_main_strreet_address = '$BankMainAddress',
+																				bank_cityZipCode = '$BankCityStateZip',
 																				acct_type = '$BankType',
 																				acct_number = '$BankAccountNumber',
 																				routing_number = '$RoutingNumber',
@@ -159,6 +167,29 @@
 							</label>
 							<div class="col-sm-8">
 							  <input type="text"  value="<?php echo $Fetch_bank_name;?>" name="BankName" placeholder="Ex: Wells Fargo" class="form-control" id="BankName" />
+							</div>
+						  </div>
+						  <div class="form-group">
+							<label for="BankMainAddress" class="col-sm-4 control-label">Bank Main Address
+								<span class="glyphicon glyphicon-info-sign red-tooltip" aria-hidden="true"   data-toggle="tooltip"
+										data-placement="right" 
+											title="Enter Bank Address: 123 Sample St N">
+								</span>
+							</label>
+							<div class="col-sm-8">
+								<input type="text"  value="<?php echo $Fetch_BankMainAddress; ?>" name="BankMainAddress" placeholder="Bank Street Address" class="form-control" id="BankMainAddress" required = "required" />
+							</div>
+						  </div>
+						  
+						  <div class="form-group">
+							<label for="BankCityStateZip" class="col-sm-4 control-label">Bank City, State Zip
+								<span class="glyphicon glyphicon-info-sign red-tooltip" aria-hidden="true"   data-toggle="tooltip"
+										data-placement="right" 
+											title="Minneapolis, MN 55555">
+								</span>
+							</label>
+							<div class="col-sm-8">
+								<input type="text" value="<?php echo $Fetch_BankCityStateZip; ?>" name="BankCityStateZip" placeholder="Minneapolis, MN 55555" class="form-control" id="BankCityStateZip" required = "required" />
 							</div>
 						  </div>
 						  <div class="form-group">

@@ -29,6 +29,7 @@ function printContent(el){
 	window.print();
 	document.body.innerHTML = restorepage;
 }
+
 //show the loading image when refreshing the page or loading something
  window.onload = setTimeout(function(){ 
 		document.getElementById("loading").style.display = "none";
