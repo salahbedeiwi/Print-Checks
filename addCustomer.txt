@@ -1,0 +1,6 @@
+0. Add New Customer, create a folder on website, give it to them so they can register.
+1.1 go to index page of register page and update the url: $mainURLforThisSite
+1. Give the customer url/folderName to enter when registering. ex. salahbedeiwi.com/print/customerIdOrNameOrFileName
+2. Once Customer is registered, i will recieve an email with his credentials, so i can go to the db and update his info.
+3. Every customer has his own db.
+4. Once customer is approved, let them know, so they can gain an access.
